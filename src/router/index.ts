@@ -11,18 +11,18 @@ const routes: Array<RouteRecordRaw> = [
     component: Home,
   },
   {
-    path: '/1',
+    path: '/participants',
     name: 'Người tham gia',
     component: Participant,
   },
   {
-    path: '/2',
+    path: '/expenses',
     name: 'Chi tiêu',
     component: Expense,
   },
   {
-    path: '/3',
-    name: 'Tổng kết',
+    path: '/balances',
+    name: 'Tổng kết số dư',
     component: Balance,
   },
   {

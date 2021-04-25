@@ -1,21 +1,16 @@
 <template>
-  <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-    <router-link to="/about">About</router-link>
+  <div id="app" class="font-sans text-gray-800">
+    <div id="nav">
+      <router-link to="/">Home</router-link> |
+      <router-link to="/participants">Người tham gia</router-link> |
+      <router-link to="/expenses">Chi tiêu</router-link> |
+      <router-link to="/balances">Tổng kết</router-link>
+    </div>
+    <router-view />
   </div>
-  <router-view />
 </template>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-
 #nav {
   padding: 30px;
 }

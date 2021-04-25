@@ -1,10 +1,16 @@
 import { createApp } from 'vue'
-import App from './App.vue'
+
+// Library
 import router from './router'
-import store from './store'
+import { store, key } from './store'
 import Antd from 'ant-design-vue'
 import 'ant-design-vue/dist/antd.css'
+import '@/assets/styles/tailwind.css'
+
+// Internal
+import App from './App.vue'
+import '@/assets/styles/scss/style.scss'
 
 const app = createApp(App)
 
-app.use(Antd).use(store).use(router).mount('#app')
+app.use(Antd).use(store, key).use(router).mount('#app')
