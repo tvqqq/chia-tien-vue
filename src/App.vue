@@ -1,12 +1,12 @@
 <template>
-  <div id="app" class="font-sans text-gray-800">
+  <div id="app" class="font-sans text-gray-800 flex flex-col items-center">
     <div id="nav">
       <router-link to="/">Home</router-link> |
       <router-link to="/participants">Người tham gia</router-link> |
       <router-link to="/expenses">Chi tiêu</router-link> |
       <router-link to="/balances">Tổng kết</router-link>
     </div>
-    <router-view />
+    <router-view class="w-full flex flex-col items-center" />
   </div>
 </template>
 

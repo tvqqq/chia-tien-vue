@@ -1,8 +1,8 @@
 <template>
   <div id="participant-page">
-    <a-button type="primary" @click="showModal('add')"
-      >Thêm người tham gia</a-button
-    >
+    <a-button type="primary" @click="showModal('add')">
+      &#9830; Thêm người tham gia
+    </a-button>
     <a-modal
       v-model:visible="modalVisible"
       title="Người tham gia"
@@ -11,25 +11,25 @@
       <a-input v-model:value="state.name" placeholder="Nhập tên" />
     </a-modal>
 
-    <table class="table-fixed">
+    <table class="my-6">
       <thead>
         <tr>
-          <th class="w-1/2">Tên</th>
-          <th class="w-1/2"></th>
+          <th>Tên</th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
         <tr v-for="p in participants" :key="p">
-          <td>{{ p.name }}</td>
+          <td class="pr-5">{{ p.name }}</td>
           <td>
             <button
-              class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+              class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded mx-2"
               @click="showModal('edit', p)"
             >
               Sửa
             </button>
             <button
-              class="bg-red-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+              class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
               @click="deleteItem(p)"
             >
               Xóa
@@ -40,10 +40,10 @@
     </table>
 
     <button
-      class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-      @click="$router.push('2')"
+      class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+      @click="$router.push('expenses')"
     >
-      Step 2
+      Step 2 &#8594;
     </button>
   </div>
 </template>

@@ -1,12 +1,14 @@
 <template>
   <div id="expense-page">
-    <a-button type="primary" @click="showModal('add')">Thêm chi tiêu</a-button>
+    <a-button type="primary" @click="showModal('add')"
+      >&#9830; Thêm chi tiêu</a-button
+    >
     <a-modal v-model:visible="modalVisible" title="Chi tiêu" @ok="handleOk()">
       Nội dung:
       <a-input v-model:value="title" placeholder="Nhập nội dung" />
       <br />
 
-      Số tiền:
+      <div class="mt-4">Số tiền:</div>
       <div class="flex items-center">
         <a-input-number
           v-model:value="amount"
@@ -33,35 +35,37 @@
       <a-checkbox-group
         v-model:value="beneficiaries"
         :options="participantOptions"
+        class="mt-4"
       >
       </a-checkbox-group>
     </a-modal>
 
-    <table class="table-fixed">
+    <table class="my-6">
       <thead>
         <tr>
-          <th class="w-1/5">Nội dung</th>
-          <th class="w-1/5">Số tiền</th>
-          <th class="w-1/5">Người thanh toán</th>
-          <th class="w-1/5">Người sử dụng</th>
-          <th class="w-1/5"></th>
+          <th>Nội dung</th>
+          <th>Số tiền</th>
+          <th>Người thanh toán</th>
+          <th>Người sử dụng</th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
         <tr v-for="e in expenses" :key="e">
-          <td>{{ e.title }}</td>
-          <td>{{ e.amount }} VNĐ</td>
-          <td>{{ participants[e.payer].name }}</td>
-          <td>{{ nameOfBeneficiaries(e.beneficiaries) }}</td>
+          <td class="pr-5">{{ e.title }}</td>
+          <td class="pr-5">{{ numberWithCommas(e.amount) }} VNĐ</td>
+          <td class="pr-5">{{ participants[e.payer].name }}</td>
+          <td class="pr-5">{{ nameOfBeneficiaries(e.beneficiaries) }}</td>
           <td>
-            <button
-              class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+            <!-- TODO: update expense is still has a bug in calculation -->
+            <!-- <button
+              class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded mx-2"
               @click="showModal('edit', e, index)"
             >
               Sửa
-            </button>
+            </button> -->
             <button
-              class="bg-red-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+              class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
               @click="deleteItem(e)"
             >
               Xóa
@@ -72,17 +76,17 @@
     </table>
 
     <button
-      class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+      class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
       @click="$router.push('participants')"
     >
-      Step 1
+      &#8592; Step 1
     </button>
 
     <button
-      class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+      class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded my-4"
       @click="$router.push('balances')"
     >
-      Step 3
+      Step 3 &#8594;
     </button>
   </div>
 </template>
@@ -161,6 +165,10 @@ export default defineComponent({
       expense.beneficiaries = []
     }
 
+    const numberWithCommas = (x: number) => {
+      return x ? x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0
+    }
+
     return {
       state,
       participants,
@@ -172,6 +180,7 @@ export default defineComponent({
       showModal,
       handleOk,
       deleteItem,
+      numberWithCommas,
     }
   },
 })

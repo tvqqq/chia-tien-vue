@@ -79,13 +79,13 @@ export const store = createStore<State>({
       state.expenses.splice(expenseIndex, 1)
     },
     CALC_BALANCE(state) {
+      // TODO: update expense is still has a bug in calculation
       state.balances = []
       state.participants.forEach((p) => {
         const pay = state.expenses.filter((x) => x.payer == p.id)
         const payAmount = _.sumBy(pay, function (o) {
           return o.amount
         })
-        console.log('payamount', payAmount)
         const consume = state.expenses.filter(
           (x) => x.beneficiaries.indexOf(p.id) != -1
         )
@@ -99,32 +99,29 @@ export const store = createStore<State>({
           balance: payAmount - consumeAmount,
         })
       })
-      console.log('balance', state.balances)
     },
   },
   actions: {
+    calcBalance({ commit }) {
+      commit('CALC_BALANCE')
+    },
     addParticipant({ commit }, participantName: string) {
       commit('ADD_PARTICIPANT', participantName)
-      commit('CALC_BALANCE')
     },
     updateParticipant({ commit }, updatedParticipant: ParticipantType) {
       commit('UPDATE_PARTICIPANT', updatedParticipant)
     },
     deleteParticipant({ commit }, deletedParticipant: ParticipantType) {
       commit('DELETE_PARTICIPANT', deletedParticipant)
-      commit('CALC_BALANCE')
     },
     addExpense({ commit }, expense: ExpenseType) {
       commit('ADD_EXPENSE', expense)
-      commit('CALC_BALANCE')
     },
     updateExpense({ commit }, expense: ExpenseType) {
       commit('UPDATE_EXPENSE', expense)
-      commit('CALC_BALANCE')
     },
     deleteExpense({ commit }, expense: ExpenseType) {
       commit('DELETE_EXPENSE', expense)
-      commit('CALC_BALANCE')
     },
   },
   getters: {
@@ -151,6 +148,7 @@ export const store = createStore<State>({
 })
 
 // define your own `useStore` composition function
+// eslint-disable-next-line
 export function useStore() {
   return baseUseStore(key)
 }

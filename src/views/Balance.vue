@@ -1,10 +1,12 @@
 <template>
   <div id="balance-page">
-    <div class="">
-      - Với số dư dương (+) sẽ là số tiền bạn nhận lại.<br />
-      - Với số dư âm (-) sẽ là số tiền bạn cần trả thêm.<br />
+    <div class="mb-6">
+      - Với <span class="text-green-800">số dư dương (+)</span> sẽ là số tiền
+      bạn nhận lại.<br />
+      - Với <span class="text-pink-800">số dư âm (-)</span> sẽ là số tiền bạn
+      cần trả thêm.<br />
     </div>
-    <a-list :grid="{ gutter: 16, xs: 2 }" :data-source="balances">
+    <a-list :grid="{ gutter: 16, xs: 1 }" :data-source="balances">
       <template #renderItem="{ item }">
         <a-list-item>
           <a-card
@@ -12,14 +14,19 @@
             class="text-red-400"
           >
             <p>
-              Đã trả: <strong>{{ item.payAmount }} VNĐ</strong>
+              Đã trả:
+              <strong>{{ numberWithCommas(item.payAmount) }} VNĐ</strong>
             </p>
             <p>
-              Đã dùng: <strong>{{ item.consumeAmount }} VNĐ</strong>
+              Đã dùng:
+              <strong>{{ numberWithCommas(item.consumeAmount) }} VNĐ</strong>
             </p>
             <hr />
             <h4>
-              Số dư = Đã trả - Đã dùng = <strong>{{ item.balance }}</strong>
+              Số dư = Đã trả - Đã dùng =
+              <strong :class="balanceColor(item.balance)">{{
+                numberWithCommas(item.balance)
+              }}</strong>
             </h4>
           </a-card>
         </a-list-item>
@@ -37,6 +44,7 @@ export default defineComponent({
   setup() {
     const store = useStore()
     const router = useRouter()
+    store.dispatch('calcBalance')
 
     const balances = computed(() => store.state.balances)
     const participants = computed(() => store.state.participants)
@@ -45,9 +53,22 @@ export default defineComponent({
       router.push('participants')
     }
 
+    const balanceColor = (balance: number) => {
+      return balance > 0 ? 'text-green-800' : 'text-pink-800'
+    }
+
+    const numberWithCommas = (x: number) => {
+      return x
+        .toString()
+        .replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+        .split('.')[0]
+    }
+
     return {
       balances,
       participants,
+      balanceColor,
+      numberWithCommas,
     }
   },
 })
