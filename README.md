@@ -1,4 +1,4 @@
-# chia-tien
+# chia-tien-vue
 
 ## Project setup
 ```
